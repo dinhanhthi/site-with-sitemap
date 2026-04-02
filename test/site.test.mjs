@@ -8,6 +8,7 @@ const requiredPages = [
   "/blog.html",
   "/contact.html"
 ];
+const siteBaseUrl = "https://site-with-sitemap.vercel.app";
 
 test("home page links to all four child pages", async () => {
   const home = await readFile(new URL("../index.html", import.meta.url), "utf8");
@@ -36,7 +37,7 @@ test("sitemap contains home and four child pages", async () => {
   for (const path of expected) {
     assert.match(
       sitemap,
-      new RegExp(`<loc>https://example\\.com${path}<\\/loc>`),
+      new RegExp(`<loc>${siteBaseUrl.replace(/\./g, "\\.")}${path}<\\/loc>`),
       `Missing sitemap URL for ${path}`
     );
   }
